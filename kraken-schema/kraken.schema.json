@@ -1,0 +1,197 @@
+{
+  "title": "KrakenInput",
+  "type": "object",
+  "properties": {
+    "kraken_type": {
+      "title": "Kraken Type",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/KrakenTypeCommit"
+        },
+        {
+          "$ref": "#/definitions/KrakenTypeRunAndForget"
+        },
+        {
+          "$ref": "#/definitions/KrakenTypePullRequest"
+        }
+      ]
+    },
+    "pre_clone_filter": {
+      "$ref": "#/definitions/PreCloneFilter"
+    },
+    "post_clone_filter": {
+      "$ref": "#/definitions/PostCloneFilter"
+    },
+    "change_scripts": {
+      "title": "Change Scripts",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "file-path"
+      }
+    }
+  },
+  "required": [
+    "kraken_type",
+    "change_scripts"
+  ],
+  "definitions": {
+    "KrakenTypeCommit": {
+      "title": "KrakenTypeCommit",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "commit"
+          ],
+          "type": "string"
+        },
+        "branch": {
+          "title": "Branch",
+          "type": "string"
+        },
+        "commit_message": {
+          "title": "Commit Message",
+          "type": "string"
+        },
+        "commit_message_md": {
+          "title": "Commit Message Md",
+          "format": "file-path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "branch"
+      ]
+    },
+    "KrakenTypeRunAndForget": {
+      "title": "KrakenTypeRunAndForget",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "run and forget"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "KrakenTypePullRequest": {
+      "title": "KrakenTypePullRequest",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "enum": [
+            "pull request"
+          ],
+          "type": "string"
+        },
+        "branch": {
+          "title": "Branch",
+          "type": "string"
+        },
+        "commit_message": {
+          "title": "Commit Message",
+          "type": "string"
+        },
+        "commit_message_md": {
+          "title": "Commit Message Md",
+          "format": "file-path",
+          "type": "string"
+        },
+        "pr_title": {
+          "title": "Pr Title",
+          "type": "string"
+        },
+        "pr_body": {
+          "title": "Pr Body",
+          "type": "string"
+        },
+        "pr_body_md": {
+          "title": "Pr Body Md",
+          "format": "file-path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "branch",
+        "pr_title"
+      ]
+    },
+    "PreCloneFilter": {
+      "title": "PreCloneFilter",
+      "type": "object",
+      "properties": {
+        "logic": {
+          "title": "Logic",
+          "enum": [
+            "and",
+            "or",
+            "not"
+          ],
+          "type": "string"
+        },
+        "operands": {
+          "title": "Operands",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/PreCloneFilter"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "logic",
+        "operands"
+      ]
+    },
+    "PostCloneFilter": {
+      "title": "PostCloneFilter",
+      "type": "object",
+      "properties": {
+        "logic": {
+          "title": "Logic",
+          "enum": [
+            "and",
+            "or",
+            "not"
+          ],
+          "type": "string"
+        },
+        "operands": {
+          "title": "Operands",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/PostCloneFilter"
+              },
+              {
+                "type": "string",
+                "format": "file-path"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "logic",
+        "operands"
+      ]
+    }
+  }
+}
