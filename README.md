@@ -1,2 +1,3 @@
 # delphai-files
-Host non-sensitive files publicaclly
+
+This repository is there to publically host non-senitive files.
